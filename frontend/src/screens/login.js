@@ -11,10 +11,8 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Copyright } from '../components/copyright';
 
-const theme = createTheme();
 
 export const LoginPage = () => {
     const handleSubmit = (event) => {
@@ -28,7 +26,6 @@ export const LoginPage = () => {
       };
     
       return (
-        <ThemeProvider theme={theme}>
           <Grid container component="main" sx={{ height: '100vh' }}>
             <CssBaseline />
             <Grid
@@ -111,6 +108,5 @@ export const LoginPage = () => {
               </Box>
             </Grid>
           </Grid>
-        </ThemeProvider>
       );
 }
