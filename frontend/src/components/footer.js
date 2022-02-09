@@ -40,7 +40,7 @@ export const Footer = () => {
         <Grid container spacing={2} columns={12}>
                         <Grid item xs={5}>
                             
-                        xs5
+                        
                         </Grid>
                             
                         <Grid item xs={7} display='flex' justifyContent='space-between'>

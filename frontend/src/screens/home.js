@@ -1,13 +1,14 @@
 import React from 'react'
+import './home.css'
 import TopBar from '../components/topbar'
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import { UserListComponent } from '../components/userListComponent';
-import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import {Footer} from '../components/footer';
+import { TextLeftComponent } from '../components/textLeftComponent';
+import { TextRightComponent } from '../components/textRightComponent';
 
 export const HomePage = () => {
     return(
@@ -33,8 +34,17 @@ export const HomePage = () => {
                             </List>
                         </Grid>
                             
-                        <Grid item xs={7}>
-                        xs=8
+                        <Grid className='noScroll' item xs={7} sx={{ maxHeight: '70vh', overflowY: 'scroll'}}>
+                            <List >
+                                <TextLeftComponent/>
+                                <TextRightComponent/>
+                                <TextLeftComponent/>
+                                <TextRightComponent/>
+                                <TextLeftComponent/>
+                                <TextRightComponent/>
+                                <TextLeftComponent/>
+                                <TextRightComponent/>
+                            </List>
                         </Grid>
                     </Grid>
                 </Box>

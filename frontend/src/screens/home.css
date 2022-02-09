@@ -1,3 +1,2 @@
-.fullheight {
-  height: 100vh;
-}
+
+.noScroll::-webkit-scrollbar { width: 0 !important }
