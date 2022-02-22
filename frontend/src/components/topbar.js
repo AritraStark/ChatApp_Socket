@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,14 +13,21 @@ import Divider from '@mui/material/Divider';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import MenuIcon from '@mui/icons-material/Menu';
 
-export default function TopBar() {
-  const [auth, setAuth] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../actions/userActions';
+
+export default function TopBar(props) {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const auth = useSelector(state => state.login.success);
+  const {name} = useSelector(state=>state.login.userDetails)
+
+  // const handleChange = (event) => {
+  //   setAuth(event.target.checked);
+  // };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,10 +37,27 @@ export default function TopBar() {
     setAnchorEl(null);
   };
 
+  // useEffect(()=>{ 
+  //   if(logoutState){
+  //     dispatch(logout())
+  //     setLogoutState(false)
+  //     navigate('/')
+  //   }
+  // },[logoutState,dispatch,navigate])
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={props.drawerOpen}
+            edge="start"
+            sx={{ mr: 2, ...(props.drawerState && { display: 'none' }) }}
+          >
+            <MenuIcon />
+          </IconButton>
           <Typography variant="h4" component="div" sx={{ flexGrow: 2 }}>
             ChatApp
           </Typography>
@@ -48,6 +72,7 @@ export default function TopBar() {
                 color="inherit"
               >
                 <AccountCircle />
+                <Typography>{name}</Typography>
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -67,9 +92,6 @@ export default function TopBar() {
                 <MenuItem>
                     <Avatar /> Profile
                     </MenuItem>
-                    <MenuItem>
-                    <Avatar /> My account
-                    </MenuItem>
                     <Divider />
                     <MenuItem>
                     <ListItemIcon>
@@ -83,7 +105,7 @@ export default function TopBar() {
                     </ListItemIcon>
                     Settings
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem onClick={props.logout}>
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>

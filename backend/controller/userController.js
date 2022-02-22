@@ -46,11 +46,14 @@ const getUser = asyncHandler(async (req, res) => {
 })
 
 
-// @desc    Get all user profiles
+// @desc    Get all user profiles except self
 // @route   GET /api/users/
 // @access  Private
 const getAllUsers = asyncHandler(async (req, res) => {
-    const users = await Users.find()
+    //get user id of current user from auth middleware
+    const { id } = req.user
+    //get all users data excluding current user from database without the passwords
+    const users = await Users.find({ _id: { $ne: id } }).select('-password')
     //send user data as response if found
     if (users) {
         res.json(users)
@@ -104,7 +107,7 @@ const createUser = asyncHandler(async (req, res) => {
 //@desc Update user
 //@access Private
 const updateUser = asyncHandler(async (req, res) => {
-    const { name, email, password, description } = req.body;
+    const { name, email, description } = req.body;
 
     let user = await Users.findOne({ _id: req.params.id })
     if (!user) {
@@ -119,7 +122,6 @@ const updateUser = asyncHandler(async (req, res) => {
             {
                 name,
                 email,
-                password,
                 description,
             },
             {

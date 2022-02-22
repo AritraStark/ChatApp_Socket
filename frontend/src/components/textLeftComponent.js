@@ -7,7 +7,7 @@ export const TextLeftComponent = (props) => {
     return(
         <Card sx={{ p:2, borderRadius:2, bgcolor: '#78f500' , m:2, width:'70%', marginLeft:'auto'}}>
             <Typography>
-                This is a text message
+                {props.message}
             </Typography>
         </Card>
     )

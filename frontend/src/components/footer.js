@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -9,6 +9,8 @@ import { UserListComponent } from '../components/userListComponent';
 import TextField from '@mui/material/TextField';
 import Fab from '@mui/material/Fab';
 import SendIcon from '@mui/icons-material/Send';
+import { useDispatch } from 'react-redux';
+import { sendMessage } from '../actions/messageActions';
 
 function Copyright() {
   return (
@@ -23,7 +25,14 @@ function Copyright() {
   );
 }
 
-export const Footer = () => {
+export const Footer = (props) => {
+  const [message, setMessage] = useState("");
+  const dispatch = useDispatch()
+
+  const handleSend = () => {
+    dispatch(sendMessage(props.currentChat, message))
+    setMessage("")
+  }
   return (
       <Box
         component="footer"
@@ -38,15 +47,11 @@ export const Footer = () => {
         }}
       >
         <Grid container spacing={2} columns={12}>
-                        <Grid item xs={5}>
                             
-                        
-                        </Grid>
-                            
-                        <Grid item xs={7} display='flex' justifyContent='space-between'>
+                        <Grid item xs={12} display='flex' justifyContent='space-between'>
 
-                            <TextField fullWidth id="outlined-basic" label="Send Message" variant="outlined" />
-                            <Fab color="primary" aria-label="add" size='medium' sx={{marginLeft:1}}>
+                            <TextField fullWidth id="outlined-basic" label="Send Message" variant="outlined" onChange={(e)=>{setMessage(e.target.value)}}/>
+                            <Fab color="primary" aria-label="add" size='medium' sx={{marginLeft:1}} onClick={handleSend}>
                                 <SendIcon />
                             </Fab>
                         </Grid>

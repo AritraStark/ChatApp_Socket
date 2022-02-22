@@ -1,4 +1,8 @@
 import * as React from 'react';
+import {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../actions/userActions';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,18 +16,42 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { Copyright } from '../components/copyright';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export const LoginPage = () => {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-          email: data.get('email'),
-          password: data.get('password'),
-        });
-      };
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+  const [open, setOpen] = useState(false);
+
+  const {success,userDetails} = useSelector(state=>state.login)
+
+  function handleLoginClick(e) {
+      e.preventDefault()
+      //console.log(email,password);
+      dispatch(login(email,password))
+      setTimeout(()=>setOpen(true),1500)
+  }
+
+  const handleAlertClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setOpen(false);
+  };
+
+  useEffect(()=>{
+    if(success)
+      navigate('/home')
+  },[success,navigate])
     
       return (
           <Grid container component="main" sx={{ height: '100vh' }}>
@@ -58,7 +86,7 @@ export const LoginPage = () => {
                 <Typography component="h1" variant="h5">
                   Log in
                 </Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                <Box component="form" noValidate onSubmit={handleLoginClick} sx={{ mt: 1 }}>
                   <TextField
                     margin="normal"
                     required
@@ -68,6 +96,9 @@ export const LoginPage = () => {
                     name="email"
                     autoComplete="email"
                     autoFocus
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
                   />
                   <TextField
                     margin="normal"
@@ -78,6 +109,9 @@ export const LoginPage = () => {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
                   />
                   <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
@@ -88,6 +122,7 @@ export const LoginPage = () => {
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
+                    onClick={handleLoginClick}
                   >
                     Log In
                   </Button>
@@ -98,7 +133,7 @@ export const LoginPage = () => {
                       </Link>
                     </Grid>
                     <Grid item>
-                      <Link href="#" variant="body2">
+                      <Link variant="body2" onClick={()=>{navigate('/signup')}}>
                         {"Don't have an account? Sign Up"}
                       </Link>
                     </Grid>
@@ -107,6 +142,11 @@ export const LoginPage = () => {
                 </Box>
               </Box>
             </Grid>
+                    <Snackbar open={open} autoHideDuration={2000} onClose={handleAlertClose}>
+                        <Alert onClose={handleAlertClose} severity="error">
+                            Login Unsuccessful
+                        </Alert>
+                    </Snackbar>
           </Grid>
       );
 }

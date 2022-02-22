@@ -1,6 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
-const messageSchema = new Schema({
+const messageSchema = new mongoose.Schema({
     from: {
         type: String,
         required: true

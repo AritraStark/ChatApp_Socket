@@ -10,7 +10,7 @@ export const UserListComponent = (props) => {
     return (
         <div>
                         <ListItem>
-                            <ListItemButton>
+                            <ListItemButton onClick={props.func}>
                             <ListItemIcon>
                                 <Avatar sx={{ bgcolor: 'secondary' }}>{props.name[0]}</Avatar>
                             </ListItemIcon>

@@ -4,6 +4,7 @@ import path from 'path'
 
 import connectDB from './config/db.js';
 import userRoute from './routes/userRoutes.js'
+import messageRoute from './routes/messageRoutes.js'
 
 //.env file initialize
 dotenv.config();
@@ -18,7 +19,7 @@ app.use(express.json())
 //Configure api endpoints with routers
 
 app.use('/api/users', userRoute)
-
+app.use('/api/messages', messageRoute)
 
 const __dirname = path.resolve()
 
