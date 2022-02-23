@@ -12,7 +12,7 @@
 
 ## Description
 
-This is a Chatting website built on MERN stack using Redux as a state management system and Material.UI in React frontend. The project also utilizes the Socket.IO to implement websockets. The project has been deployed in heroku and can be found at [link](https://starkchatsocket.herokuapp.com/) 
+This is a Chatting website built on MERN stack using Redux as a state management system and Material.UI in React frontend. The project also utilizes the Socket.IO to implement websockets. The project is holsted on heroku from the master branch. The project has been deployed in heroku and can be found at [link](https://starkchatsocket.herokuapp.com/) 
 
 [Back To The Top](#Table-of-Contents)
 
