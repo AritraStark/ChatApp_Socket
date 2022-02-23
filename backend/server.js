@@ -61,8 +61,7 @@ let users = [];
 
 //when a user logs in add the user with their id to the array
 const addUser = (userId, socketId) => {
-    !users.some((user) => user.userId === userId) &&
-        users.push({ userId, socketId });
+    users.push({ userId, socketId });
 };
 
 //when a user logs out remove the user from the array
@@ -96,6 +95,7 @@ io.on("connection", (socket) => {
             text
         });
         const v = users.filter((user) => user.userId === to);
+        console.log(u);
         io.to(v[0].socketId).emit("getMessage", {
             from,
             to,

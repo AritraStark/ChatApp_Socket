@@ -90,14 +90,6 @@ export const HomePage = () => {
     const handleBroadFormOpen = () => {
         setShowBF(true)
     }    
-
-
-    const handleIncomingMessages = (messages) =>{
-        messages && messages.map((m)=>{
-            setMsgs(prev => [...prev, m])
-        })
-    }
-
     //this is for the socket get message and initial connection
     useEffect(() => {
         socket.current = io.connect(ENDPOINT)
@@ -144,11 +136,6 @@ export const HomePage = () => {
     //this is for sending user details upon new socket connection
     useEffect(() => {
         socket.current.emit("addUser", fromID);
-        // socket.current.on("getUsers", (users) => {
-        //   setOnlineUsers(
-        //     user.followings.filter((f) => users.some((u) => u.userId === f))
-        //   );
-        // });
       }, [fromID]);
 
     //this is for scrolling latest message into focus
