@@ -12,7 +12,7 @@
 
 ## Description
 
-This is a Chatting website built on MERN stack using Redux as a state management system and Material.UI in React frontend. The project also utilizes the Socket.IO to implement websockets. 
+This is a Chatting website built on MERN stack using Redux as a state management system and Material.UI in React frontend. The project also utilizes the Socket.IO to implement websockets. The project has been deployed in heroku and can be found at [link](https://starkchatsocket.herokuapp.com/) 
 
 [Back To The Top](#Table-of-Contents)
 
@@ -20,6 +20,7 @@ This is a Chatting website built on MERN stack using Redux as a state management
 
 - <img align="left" alt="Node.js" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png" /> NodeJS
 - <img align="left" alt="Express" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/express/express.png" /> Express
+- <img align="left" alt="Socket.io" width="26px" src="https://upload.wikimedia.org/wikipedia/commons/9/96/Socket-io.svg" /> Socket.io
 - <img align="left" alt="React" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" /> React
 - <img align="left" alt="Redux" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/redux/redux.png" /> Redux
 - <img align="left" alt="Heroku" width="26px" src="https://avatars.githubusercontent.com/u/2810941?s=200&v=4" /> GCP
