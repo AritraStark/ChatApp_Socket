@@ -88,8 +88,15 @@ io.on("connection", (socket) => {
     //send and get message
     socket.on("sendMessage", ({ from, to, text, createdAt }) => {
         console.log(users)
-        const user = getUser(to);
-        io.emit("getMessage", {
+        const u = users.filter((user) => user.userId === from);
+        console.log(u);
+        io.to(u[0].socketId).emit("getMessage", {
+            from,
+            to,
+            text
+        });
+        const v = users.filter((user) => user.userId === to);
+        io.to(v[0].socketId).emit("getMessage", {
             from,
             to,
             text

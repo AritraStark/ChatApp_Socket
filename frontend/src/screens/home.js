@@ -26,7 +26,7 @@ import { Broadcast } from '../components/broadcast'
 import { BroadcastForm } from '../components/broadcastForm'
 
 const drawerWidth = 240;
-const ENDPOINT = "https://starkchatsocket.herokuapp.com/"
+const ENDPOINT = "http://localhost:5000/"
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -54,7 +54,7 @@ export const HomePage = () => {
     const navigate = useNavigate()
 
     const auth = useSelector(state => state.login.success)
-    // const auth = true
+    //const auth = true
     const { users } = useSelector(state => state.usersGet)
     const { messages } = useSelector(state => state.messagesGet)
     const fromID = useSelector(state => state.login.userDetails._id)

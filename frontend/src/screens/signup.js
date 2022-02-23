@@ -151,7 +151,7 @@ export const SignupPage = () => {
                 </Grid>
                       <Snackbar open={open} autoHideDuration={8000} onClose={handleAlertClose}>
                             {success===true?<Alert onClose={handleAlertClose} severity="success">
-                                Signup Successful, Login <Link to='/'>here</Link>
+                                Signup Successful, Login <Link href='/home'>here</Link>
                             </Alert>:<Alert onClose={handleAlertClose} severity="error">
                                 Signup Unsuccessful
                             </Alert>}
