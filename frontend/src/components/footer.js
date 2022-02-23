@@ -9,7 +9,7 @@ import { UserListComponent } from '../components/userListComponent';
 import TextField from '@mui/material/TextField';
 import Fab from '@mui/material/Fab';
 import SendIcon from '@mui/icons-material/Send';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { sendMessage } from '../actions/messageActions';
 
 function Copyright() {
@@ -27,10 +27,18 @@ function Copyright() {
 
 export const Footer = (props) => {
   const [message, setMessage] = useState("");
+
+  const id = useSelector(state => state.login.userDetails._id)
   const dispatch = useDispatch()
 
   const handleSend = () => {
     dispatch(sendMessage(props.currentChat, message))
+    props.socket.current.emit("sendMessage", {
+      from: id,
+      to: props.currentChat,
+      text: message,
+      createdAt: Date.now()
+    });
     setMessage("")
   }
   return (
@@ -50,7 +58,7 @@ export const Footer = (props) => {
                             
                         <Grid item xs={12} display='flex' justifyContent='space-between'>
 
-                            <TextField fullWidth id="outlined-basic" label="Send Message" variant="outlined" onChange={(e)=>{setMessage(e.target.value)}}/>
+                            <TextField fullWidth id="outlined-basic" label="Send Message" variant="outlined" onChange={(e)=>{setMessage(e.target.value)}} value={message}/>
                             <Fab color="primary" aria-label="add" size='medium' sx={{marginLeft:1}} onClick={handleSend}>
                                 <SendIcon />
                             </Fab>

@@ -4,8 +4,8 @@ import {HomePage} from './screens/home';
 import {LoginPage} from './screens/login';
 import {SignupPage} from './screens/signup';
 import {FallbackPage} from './screens/fallback';
-import {ProfilePage} from './screens/profile';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import SettingsPage from './screens/settings';
 
 const theme = createTheme({
   palette: {
@@ -31,7 +31,7 @@ function App() {
             <Route path="/" element={<LoginPage/>}/>
             <Route path="/home" element={<HomePage/>}/>
             <Route path="/signup" element={<SignupPage/>}/>
-            <Route path="/profile" element={<ProfilePage/>}/>
+            <Route path="/settings" element={<SettingsPage/>}/>
             <Route path="*" element={<FallbackPage/>}/>
           </Routes>
         </BrowserRouter>

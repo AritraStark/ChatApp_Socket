@@ -60,7 +60,7 @@ const getMessages = asyncHandler(async (req, res) => {
     if (userFrom && userTo) {
         //get messages from database
         const messages = await Messages.find({ to: [userId, id], from: [id, userId] })
-            .sort({ createdAt: -1 })
+            .sort({ createdAt: 1 })
 
         //send response
         res.status(200).json(messages)

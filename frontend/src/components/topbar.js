@@ -14,6 +14,7 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
+import PodcastsIcon from '@mui/icons-material/Podcasts';
 
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -24,11 +25,7 @@ export default function TopBar(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const auth = useSelector(state => state.login.success);
   const {name} = useSelector(state=>state.login.userDetails)
-
-  // const handleChange = (event) => {
-  //   setAuth(event.target.checked);
-  // };
-
+  const navigate = useNavigate()
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -36,14 +33,6 @@ export default function TopBar(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  // useEffect(()=>{ 
-  //   if(logoutState){
-  //     dispatch(logout())
-  //     setLogoutState(false)
-  //     navigate('/')
-  //   }
-  // },[logoutState,dispatch,navigate])
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -90,7 +79,7 @@ export default function TopBar(props) {
                 onClose={handleClose}
               >
                 <MenuItem>
-                    <Avatar /> Profile
+                    <Avatar /> {name}
                     </MenuItem>
                     <Divider />
                     <MenuItem>
@@ -99,11 +88,17 @@ export default function TopBar(props) {
                     </ListItemIcon>
                     Add another account
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem onClick={()=>navigate('/settings')}>
                     <ListItemIcon>
                         <Settings fontSize="small" />
                     </ListItemIcon>
                     Settings
+                    </MenuItem>
+                    <MenuItem onClick={props.handleBroadFormOpen}>
+                    <ListItemIcon>
+                        <PodcastsIcon fontSize="small" />
+                    </ListItemIcon>
+                    Broadcast
                     </MenuItem>
                     <MenuItem onClick={props.logout}>
                     <ListItemIcon>
