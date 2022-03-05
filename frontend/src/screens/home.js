@@ -95,12 +95,12 @@ export const HomePage = () => {
         socket.current = io.connect(ENDPOINT)
 
         socket.current.on("getMessage", (data) => {
-            setArrivalMessage({
+            setMsgs((prev)=>[...prev,{
                 from: data.from,
                 to: data.to,
                 message: data.text,
                 createdAt: Date.now(),
-            });
+            }]);
         });
 
         //this is for updating broadcast message upon getting broadcast from socket
