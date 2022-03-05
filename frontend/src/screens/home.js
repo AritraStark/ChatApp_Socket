@@ -204,9 +204,11 @@ export const HomePage = () => {
                                 showBF && <BroadcastForm open={showBF} handleBroadFormClose={handleBroadFormClose} socket={socket}/>
                             }
                                 {
-                                    messages && messages.map(message => (
-                                        message.to === currentChat ? <TextLeftComponent key={message._id} message={message.message}  /> : <TextRightComponent key={message._id} message={message.message} />
-                                    ))
+                                    messages && messages.map((m) => {
+                                        if(m.to === currentChat && m.from === fromID) return <TextLeftComponent key={m._id} message={m.message} /> 
+                                        else if(m.to === fromID && m.from === currentChat) return <TextRightComponent key={m._id} message={m.message}/>
+                                        else return null
+                                    })
                                 }
                                 {
                                     msgs && msgs.map((m) => {
