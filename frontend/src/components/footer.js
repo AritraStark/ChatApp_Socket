@@ -12,18 +12,6 @@ import SendIcon from '@mui/icons-material/Send';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendMessage } from '../actions/messageActions';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 export const Footer = (props) => {
   const [message, setMessage] = useState("");
@@ -31,14 +19,14 @@ export const Footer = (props) => {
   const id = useSelector(state => state.login.userDetails._id)
   const dispatch = useDispatch()
 
-  const handleSend = () => {
+  const handleSend = async () => {
     dispatch(sendMessage(props.currentChat, message))
-    props.socket.current.emit("sendMessage", {
+    await props.messagesRef.add({
       from: id,
       to: props.currentChat,
       text: message,
       createdAt: Date.now()
-    });
+    })
     setMessage("")
   }
   return (

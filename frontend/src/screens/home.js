@@ -20,6 +20,8 @@ import { TextLeftComponent } from '../components/textLeftComponent';
 import { TextRightComponent } from '../components/textRightComponent';
 import { getMessages } from '../actions/messageActions'
 import { Typography } from '@mui/material'
+import { fireStore } from '../firebase/config'
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import {io} from 'socket.io-client'
 import { Broadcast } from '../components/broadcast'
@@ -40,12 +42,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export const HomePage = () => {
     const [currentChat, setCurrentChat] = useState()
     const [open, setOpen] = useState(false)
-    const [msgs, setMsgs] = useState([])
-    const [arrivalMessage, setArrivalMessage] = useState(null)
     const [bmsg, setBmsg] = useState(null)
     const [showB, setShowB] = useState(false)
     const [showBF, setShowBF] = useState(false)
     
+    const messagesRef = fireStore.collection('messages');
     const socket = useRef()
     const scrollRef = useRef();
 
@@ -53,10 +54,12 @@ export const HomePage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const query = messagesRef.orderBy('createdAt');
+    const [messages] = useCollectionData(query, { idField: 'id' });
     const auth = useSelector(state => state.login.success)
     // const auth = true
     const { users } = useSelector(state => state.usersGet)
-    const { messages } = useSelector(state => state.messagesGet)
+    //const { messages } = useSelector(state => state.messagesGet)
     const fromID = useSelector(state => state.login.userDetails._id)
 
     //setMsgs(messages)
@@ -94,15 +97,6 @@ export const HomePage = () => {
     useEffect(() => {
         socket.current = io.connect(ENDPOINT)
 
-        socket.current.on("getMessage", (data) => {
-            setMsgs((prev)=>[...prev,{
-                from: data.from,
-                to: data.to,
-                message: data.text,
-                createdAt: Date.now(),
-            }]);
-        });
-
         //this is for updating broadcast message upon getting broadcast from socket
         socket.current.on('getBroadcast', (data) => {
             setBmsg({
@@ -120,7 +114,6 @@ export const HomePage = () => {
             navigate('/')
         dispatch(getUsers())
         dispatch(getMessages(currentChat))
-        setMsgs([])
         //handleIncomingMessages(messages)
     }, [ dispatch, navigate, currentChat, auth ])
     
@@ -134,7 +127,7 @@ export const HomePage = () => {
     //this is for scrolling latest message into focus
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [msgs, messages]);
+    }, [messages]);
 
     return (
         <Box sx={{
@@ -203,19 +196,19 @@ export const HomePage = () => {
                                         else return null
                                     })
                                 }
-                                {
+                                {/* {
                                     msgs && msgs.map((m) => {
                                         if(m.to === currentChat && m.from === fromID) return <TextLeftComponent key={m._id} message={m.message} /> 
                                         else if(m.to === fromID && m.from === currentChat) return <TextRightComponent key={m._id} message={m.message}/>
                                         else return null
                                     })
-                                }
+                                } */}
                                 <div ref={scrollRef}/>
                             </List>
                         </Grid>
                     </Grid>
                 </Box>
-                <Footer currentChat={currentChat} socket={socket}/>
+                <Footer currentChat={currentChat} socket={socket} messagesRef={messagesRef}/>
             </Container>
         </Box>
     )
