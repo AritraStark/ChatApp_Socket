@@ -55,7 +55,7 @@ export const HomePage = () => {
     const navigate = useNavigate()
 
     const query = messagesRef.orderBy('createdAt');
-    const [messages] = useCollectionData(query, { idField: 'id' });
+    const [messages] = useCollectionData(query);
     const auth = useSelector(state => state.login.success)
     // const auth = true
     const { users } = useSelector(state => state.usersGet)
