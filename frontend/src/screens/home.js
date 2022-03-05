@@ -191,8 +191,8 @@ export const HomePage = () => {
                             }
                                 {
                                     messages && messages.map((m) => {
-                                        if(m.to === currentChat && m.from === fromID) return <TextLeftComponent key={m._id} message={m.message} /> 
-                                        else if(m.to === fromID && m.from === currentChat) return <TextRightComponent key={m._id} message={m.message}/>
+                                        if(m.to === currentChat && m.from === fromID) return <TextLeftComponent key={m._id} message={m.text} /> 
+                                        else if(m.to === fromID && m.from === currentChat) return <TextRightComponent key={m._id} message={m.text}/>
                                         else return null
                                     })
                                 }
