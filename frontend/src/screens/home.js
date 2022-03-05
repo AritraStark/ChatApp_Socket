@@ -123,13 +123,6 @@ export const HomePage = () => {
         setMsgs([])
         //handleIncomingMessages(messages)
     }, [ dispatch, navigate, currentChat, auth ])
-
-    //this is for updating the messages array on incoming message from socket
-    useEffect(() => {
-        arrivalMessage && setMsgs((prev) => [...prev, arrivalMessage]);
-        setArrivalMessage(null);
-    }, [arrivalMessage]);
-
     
 
 
