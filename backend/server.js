@@ -45,7 +45,7 @@ const PORT = process.env.PORT || 5000
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     pingTimeout: 60000,
-    pingInterval: 25000,
+    pingInterval: 2500,
     cors: {
         origin: "http://localhost:3000"
     }
@@ -85,22 +85,27 @@ io.on("connection", (socket) => {
     });
 
     //send and get message
+    // socket.on("sendMessage", ({ from, to, text, createdAt }) => {
+    //     console.log(users)
+    //     const u = users.filter((user) => user.userId === from);
+    //     console.log(u);
+    //     io.to(u[0].socketId).emit("getMessage", {
+    //         from,
+    //         to,
+    //         text
+    //     });
+    //     const v = users.filter((user) => user.userId === to);
+    //     console.log(u);
+    //     io.to(v[0].socketId).emit("getMessage", {
+    //         from,
+    //         to,
+    //         text
+    //     });
+    // });
+
     socket.on("sendMessage", ({ from, to, text, createdAt }) => {
         console.log(users)
-        const u = users.filter((user) => user.userId === from);
-        console.log(u);
-        io.to(u[0].socketId).emit("getMessage", {
-            from,
-            to,
-            text
-        });
-        const v = users.filter((user) => user.userId === to);
-        console.log(u);
-        io.to(v[0].socketId).emit("getMessage", {
-            from,
-            to,
-            text
-        });
+        io.emit("getMessage", { from, to, text, createdAt })
     });
 
     //send a broadcast message
