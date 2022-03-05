@@ -84,30 +84,6 @@ io.on("connection", (socket) => {
         io.emit("getUsers", users);
     });
 
-    //send and get message
-    // socket.on("sendMessage", ({ from, to, text, createdAt }) => {
-    //     console.log(users)
-    //     const u = users.filter((user) => user.userId === from);
-    //     console.log(u);
-    //     io.to(u[0].socketId).emit("getMessage", {
-    //         from,
-    //         to,
-    //         text
-    //     });
-    //     const v = users.filter((user) => user.userId === to);
-    //     console.log(u);
-    //     io.to(v[0].socketId).emit("getMessage", {
-    //         from,
-    //         to,
-    //         text
-    //     });
-    // });
-
-    socket.on("sendMessage", ({ from, to, text, createdAt }) => {
-        console.log(users)
-        io.emit("getMessage", { from, to, text, createdAt })
-    });
-
     //send a broadcast message
     socket.on("sendBroadcast", ({ from, text }) => {
         io.emit("getBroadcast", { from, text })

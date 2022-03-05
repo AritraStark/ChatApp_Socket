@@ -57,12 +57,8 @@ export const HomePage = () => {
     const query = messagesRef.orderBy('createdAt');
     const [messages] = useCollectionData(query);
     const auth = useSelector(state => state.login.success)
-    // const auth = true
     const { users } = useSelector(state => state.usersGet)
-    //const { messages } = useSelector(state => state.messagesGet)
     const fromID = useSelector(state => state.login.userDetails._id)
-
-    //setMsgs(messages)
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -93,9 +89,10 @@ export const HomePage = () => {
     const handleBroadFormOpen = () => {
         setShowBF(true)
     }    
-    //this is for the socket get message and initial connection
     useEffect(() => {
         socket.current = io.connect(ENDPOINT)
+        //add user
+        socket.current.emit("addUser", fromID);
 
         //this is for updating broadcast message upon getting broadcast from socket
         socket.current.on('getBroadcast', (data) => {
@@ -105,7 +102,7 @@ export const HomePage = () => {
             })
             setShowB(true)
         })
-    }, [])
+    }, [fromID])
 
     //this is for the non socket redux actions
     useEffect(() => {
@@ -117,13 +114,6 @@ export const HomePage = () => {
         //handleIncomingMessages(messages)
     }, [ dispatch, navigate, currentChat, auth ])
     
-
-
-    //this is for sending user details upon new socket connection
-    useEffect(() => {
-        socket.current.emit("addUser", fromID);
-      }, [fromID]);
-
     //this is for scrolling latest message into focus
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -196,19 +186,12 @@ export const HomePage = () => {
                                         else return null
                                     })
                                 }
-                                {/* {
-                                    msgs && msgs.map((m) => {
-                                        if(m.to === currentChat && m.from === fromID) return <TextLeftComponent key={m._id} message={m.message} /> 
-                                        else if(m.to === fromID && m.from === currentChat) return <TextRightComponent key={m._id} message={m.message}/>
-                                        else return null
-                                    })
-                                } */}
                                 <div ref={scrollRef}/>
                             </List>
                         </Grid>
                     </Grid>
                 </Box>
-                <Footer currentChat={currentChat} socket={socket} messagesRef={messagesRef}/>
+                <Footer currentChat={currentChat} messagesRef={messagesRef}/>
             </Container>
         </Box>
     )
